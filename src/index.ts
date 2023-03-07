@@ -10,7 +10,7 @@ type Option = {
   bucket: string,
   limit?: number,
 }
-export default async function uploadFileToOSS(option: Option, localFileAddress: string ) {
+export default async function uploadFileToOSS(option: Option, localFileAddress: string) {
   const { limit = 200 } = option;
   let client = new OSS(
     option
@@ -20,9 +20,19 @@ export default async function uploadFileToOSS(option: Option, localFileAddress: 
   async.parallelLimit(
     docs.map((file, index) => {
       return async () => {
-        await client.put.bind(null, file.split(localFileAddress.split('/').at(-1) as string)[1].slice(1), path.normalize(file))
-        logger.info(`\u6587\u4EF6\u4E0A\u4F20\u4E2D:${fileTotal} /${index + 1}`);
-        return true
+        try {
+          const result = await client.put(file.split(localFileAddress.split('/').at(-1) as string)[1].slice(1), path.normalize(file))
+          // @ts-nocheck
+          if (result.res.status !== 200) {
+            throw new Error(path.normalize(file) + '上传失败')
+          }
+          logger.info(`\u6587\u4EF6\u4E0A\u4F20\u4E2D:${fileTotal} /${index + 1}`);
+          return true
+        } catch (error) {
+          logger.warn(error);
+          return false
+
+        }
       };
     })
     , limit, (err: any, results: any) => {
