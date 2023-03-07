@@ -3,6 +3,16 @@
 - 上传指定文件夹内所有文件到oss
 
 ## 使用
+-
+```ts
+type Option = {
+  region: string,
+  accessKeyId: string,
+  accessKeySecret: string,
+  bucket: string,
+  limit?: number, // 异步任务数量 默认200
+}
+```
 ```js
 // esm
 

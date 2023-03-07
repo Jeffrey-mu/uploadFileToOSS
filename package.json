@@ -1,9 +1,9 @@
 {
   "name": "upload-files-to-oss",
   "type": "module",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "packageManager": "pnpm@7.2.1",
-  "description": "",
+  "description": "自动扫描文件夹、将指定文件夹内文件上传到oss",
   "author": "Jeffrey-mu <1115378579@qq.com>",
   "license": "MIT",
   "homepage": "https://github.com/Jeffrey-mu/uploadFileToOss#readme",
@@ -12,7 +12,7 @@
     "url": "git+https://github.com/Jeffrey-mu/uploadFileToOss.git"
   },
   "bugs": "https://github.com/Jeffrey-mu/uploadFileToOss/issues",
-  "keywords": [],
+  "keywords": ["upload", "oss", "utils"],
   "sideEffects": false,
   "exports": {
     ".": {
@@ -62,7 +62,11 @@
   },
   "dependencies": {
     "@types/ali-oss": "^6.16.7",
+    "@types/async": "^3.2.18",
+    "@types/log4js": "^2.3.5",
     "ali-oss": "^6.17.1",
-    "fast-glob": "^3.2.12"
+    "async": "^3.2.4",
+    "fast-glob": "^3.2.12",
+    "log4js": "^6.9.0"
   }
 }
