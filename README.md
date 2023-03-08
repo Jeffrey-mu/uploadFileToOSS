@@ -1,5 +1,7 @@
 
 # upload-files-to-oss
+[![npm version][npm-version-src]][npm-version-href]
+[![npm downloads][npm-downloads-src]][npm-downloads-href]
 - 上传指定文件夹内所有文件到oss
 
 ## 使用
@@ -43,3 +45,12 @@ uploadFileToOSS(
 ## License
 
 [MIT](./LICENSE) License © 2022 [Jeffrey-mu](https://github.com/Jeffrey-mu)
+
+<!-- Badges -->
+[npm-version-src]: https://img.shields.io/npm/v/upload-files-to-oss/latest.svg?style=flat&colorA=18181B&colorB=28CF8D
+[npm-version-href]: https://npmjs.com/package/upload-files-to-oss
+
+[npm-downloads-src]: https://img.shields.io/npm/dm/upload-files-to-oss.svg?style=flat&colorA=18181B&colorB=28CF8D
+[npm-downloads-href]: https://npmjs.com/package/upload-files-to-oss
+
+
