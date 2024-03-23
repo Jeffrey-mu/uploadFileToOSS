@@ -18,7 +18,7 @@ export default async function uploadFileToOSS(option: Option, localFileAddress: 
   consola.start('初始化client...')
   const client = new OSS(option)
   const files = fg.sync(`${localFileAddress}/**`)
-  consola.error(`一共${files.length}个文件`)
+  consola.info(`一共${files.length}个文件`)
   async.parallelLimit(
     files.map((file) => {
       return async () => {

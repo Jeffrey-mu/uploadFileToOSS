@@ -49,6 +49,16 @@
     "test": "vitest",
     "typecheck": "tsc --noEmit"
   },
+  "dependencies": {
+    "@types/ali-oss": "^6.16.7",
+    "@types/async": "^3.2.18",
+    "@types/log4js": "^2.3.5",
+    "ali-oss": "^6.17.1",
+    "async": "^3.2.4",
+    "consola": "^3.2.3",
+    "fast-glob": "^3.2.12",
+    "log4js": "^6.9.0"
+  },
   "devDependencies": {
     "@antfu/eslint-config": "^0.25.1",
     "@antfu/ni": "^0.16.2",
@@ -63,15 +73,5 @@
     "unbuild": "^0.7.4",
     "vite": "^2.9.12",
     "vitest": "^0.15.1"
-  },
-  "dependencies": {
-    "@types/ali-oss": "^6.16.7",
-    "@types/async": "^3.2.18",
-    "@types/log4js": "^2.3.5",
-    "ali-oss": "^6.17.1",
-    "async": "^3.2.4",
-    "consola": "^3.2.3",
-    "fast-glob": "^3.2.12",
-    "log4js": "^6.9.0"
   }
 }
