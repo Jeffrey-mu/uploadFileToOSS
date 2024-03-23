@@ -1,47 +1,52 @@
+import path from 'node:path'
+import { fileURLToPath } from 'node:url'
 import OSS from 'ali-oss'
 import async from 'async'
-import path from 'path'
-import fs from 'fast-glob'
-import { logger } from './common'
-type Option = {
-  region: string,
-  accessKeyId: string,
-  accessKeySecret: string,
-  bucket: string,
-  limit?: number,
+import fg from 'fast-glob'
+import { consola } from 'consola'
+interface Option {
+  region: string
+  accessKeyId: string
+  accessKeySecret: string
+  bucket: string
+  limit?: number
 }
+const __dirname = path.dirname(fileURLToPath(import.meta.url))
+
 export default async function uploadFileToOSS(option: Option, localFileAddress: string) {
-  const { limit = 200 } = option;
-  let client = new OSS(
-    option
-  );
-  const docs = fs.sync(localFileAddress + '/**')
-  let fileTotal = docs.length;
+  consola.info('Using fast-glob ali-oss consola')
+  const startTime = +new Date()
+  const { limit = 200 } = option
+  consola.start('初始化client...')
+  const client = new OSS(option)
+  const files = fg.sync(path.join(__dirname, `${localFileAddress}/**`))
+  consola.error(`一共${files}个文件`)
   async.parallelLimit(
-    docs.map((file, index) => {
+    files.map((file) => {
       return async () => {
         try {
           const result = await client.put(file.split(localFileAddress.split('/').at(-1) as string)[1].slice(1), path.normalize(file))
-          // @ts-nocheck
-          if (result.res.status !== 200) {
-            throw new Error(path.normalize(file) + '上传失败')
+          if (result.res.status === 200) {
+            consola.success(`${file}上传成功！`)
+            return false
           }
-          logger.info(`\u6587\u4EF6\u4E0A\u4F20\u4E2D:${fileTotal} /${index + 1}`);
-          return true
-        } catch (error) {
-          logger.warn(error);
-          return false
-
+          else {
+            consola.error(`${file}上传失败！`)
+            return false
+          }
         }
-      };
-    })
-    , limit, (err: any, results: any) => {
-      if (err) {
-        logger.warn(`Error: ${err.message}`);
-      } else {
-        if (results.every((item: boolean) => item))
-          logger.fatal(`Results: 文件全部上传成功`);
+        catch (error) {
+          consola.error(error)
+          return false
+        }
       }
     })
-
+    , limit, (err: any, results: any) => {
+      if (err)
+        consola.warn(`Error: ${err.message}`)
+      if (results.every((item: boolean) => item)) {
+        const endTime = +new Date()
+        consola.success(`文件全部上传成功，耗时：${endTime - startTime}ms`)
+      }
+    })
 }
