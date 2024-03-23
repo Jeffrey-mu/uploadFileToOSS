@@ -1,5 +1,4 @@
 import path from 'node:path'
-import { fileURLToPath } from 'node:url'
 import OSS from 'ali-oss'
 import async from 'async'
 import fg from 'fast-glob'
@@ -11,7 +10,6 @@ interface Option {
   bucket: string
   limit?: number
 }
-const __dirname = path.dirname(fileURLToPath(import.meta.url))
 
 export default async function uploadFileToOSS(option: Option, localFileAddress: string) {
   consola.info('Using fast-glob ali-oss consola')
@@ -19,8 +17,8 @@ export default async function uploadFileToOSS(option: Option, localFileAddress: 
   const { limit = 200 } = option
   consola.start('初始化client...')
   const client = new OSS(option)
-  const files = fg.sync(path.join(__dirname, `${localFileAddress}/**`))
-  consola.error(`一共${files}个文件`)
+  const files = fg.sync(`${localFileAddress}/**`)
+  consola.error(`一共${files.length}个文件`)
   async.parallelLimit(
     files.map((file) => {
       return async () => {
