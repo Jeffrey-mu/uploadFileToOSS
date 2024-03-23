@@ -26,7 +26,7 @@ export default async function uploadFileToOSS(option: Option, localFileAddress: 
           const result = await client.put(file.split(localFileAddress.split('/').at(-1) as string)[1].slice(1), path.normalize(file))
           if (result.res.status === 200) {
             consola.success(`${file}上传成功！`)
-            return false
+            return true
           }
           else {
             consola.error(`${file}上传失败！`)
