@@ -9,6 +9,7 @@ interface Option {
   accessKeySecret: string
   bucket: string
   limit?: number
+  sussessEvent?: () => void
 }
 
 export default async function uploadFileToOSS(option: Option, localFileAddress: string) {
@@ -45,6 +46,8 @@ export default async function uploadFileToOSS(option: Option, localFileAddress: 
       if (results.every((item: boolean) => item)) {
         const endTime = +new Date()
         consola.success(`文件全部上传成功，耗时：${endTime - startTime}ms`)
+
+        typeof option.sussessEvent === 'function' && option.sussessEvent()
       }
     })
 }
