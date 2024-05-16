@@ -2,7 +2,7 @@
   "name": "upload-files-to-oss",
   "type": "module",
   "version": "0.0.9",
-  "packageManager": "pnpm@7.2.1",
+  "packageManager": "pnpm@9.1.1",
   "description": "自动扫描文件夹、将指定文件夹内文件上传到oss",
   "author": "Jeffrey-mu <1115378579@qq.com>",
   "license": "MIT",
